@@ -183,7 +183,7 @@ def DetectCircle(image, preprocess=False, show_result=False):
     return center, radius
 
 def _run(filename):
-    return DetectCircle(filename)
+    return DetectCircleFromFile(filename)
 
 def _test():
 #    ## TODO: test cases, especially for iterative approach

@@ -139,7 +139,7 @@ def _topNCircles(acc, radii, n):
             max_signal = signal
             (circle_y, circle_x) = max_positions[i]
             radius = r
-        print "Maximum signal for radius %d: %d %s, normal signal: %f" % (r, maxima[i], max_positions[i], signal)
+        print ("Maximum signal for radius %d: %d %s, normal signal: %f" % (r, maxima[i], max_positions[i], signal))
         
 
     # Identify maximum. Note: the values come back as index, row, column
@@ -158,7 +158,7 @@ def DetectCircle(image, preprocess=False, show_result=False):
     if preprocess:
         if image.ndim > 2:
             image = np.mean(image, axis=2)
-        print "Image size: ", image.shape
+        print ("Image size: ", image.shape)
         
         # noise reduction
         image = filters.gaussian_filter(image, 2)
@@ -167,15 +167,15 @@ def DetectCircle(image, preprocess=False, show_result=False):
         edges = _detectEdges(image, _EDGE_THRESHOLD)
         edge_list = np.array(edges.nonzero())
         density = float(edge_list[0].size)/edges.size
-        print "Signal density:", density
+        print ("Signal density:", density)
         if density > 0.25:
-            print "High density, consider more preprocessing"
+            print ("High density, consider more preprocessing")
             
     # create kernels and detect circle
     radii = np.arange(_MIN_RADIUS, _MAX_RADIUS, _RADIUS_STEP)
     acc = _detectCircles(edges, radii, _ANNULUS_WIDTH)
     center, radius = _topNCircles(acc, radii, 1)
-    print "Circle detected at ", center, radius
+    print ("Circle detected at ", center, radius)
     
     if show_result:
         _displayResults(image, edges, center, radius)
